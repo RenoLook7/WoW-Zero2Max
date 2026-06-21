@@ -1,0 +1,33 @@
+## Interface: 120007
+## Title: Zero2Max
+## Author: 
+## Version: 12.0.7
+## Notes: 
+## eMail: 
+## URL: 
+## X-Compatible-With: 
+## X-Since-Interface: 
+## X-Category: Quest
+## DefaultState: Enabled
+## LoadOnDemand: 0
+# ## SavedVariables: Zero2Max_Master_DB, Zero2Max_Master_DB2
+# ## SavedVariablesPerCharacter: Zero2Max_Ch_Config, Zero2Max_Ch_Data
+
+locale\locale.xml
+
+Main.lua
+Tables.lua
+Player.lua
+
+MainFrame.xml
+
+Common.lua
+BoardMessage.lua
+TooltipsMessage.lua
+Portrait.lua
+
+Macro.lua
+
+# Debug.lua
+# PrivateTooltips.lua
+# PrivateMacro.lua

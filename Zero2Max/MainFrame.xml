@@ -1,0 +1,114 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\..\FrameXML\UI.xsd"> 
+
+<Script file="MainFrame.lua"/>
+
+<!-- =========================================================================================== -->
+<!-- =========================================================================================== -->
+<!-- =========================================================================================== -->
+<!-- Font templates -->
+<!-- 	Use for board left string -->
+<FontString name="Zero2Max_board_left" inherits="GameTooltipHeaderText" justifyH="LEFT" justifyV="TOP" virtual="true">
+    <Shadow><Offset x="1" y="-1"/><Color r="0" g="0" b="0" a="1.0"/></Shadow>
+</FontString>
+
+<!-- 	Use for board right string -->
+<FontString name="Zero2Max_board_right" inherits="GameTooltipHeaderText" justifyH="RIGHT" justifyV="TOP" virtual="true">
+    <Shadow><Offset x="1" y="-1"/><Color r="0" g="0" b="0" a="1.0"/></Shadow>
+</FontString>
+
+<!-- 	Use for tooltip header -->
+<FontString name="Zero2Max_tooltip_header" inherits="GameTooltipHeaderText" justifyH="LEFT" justifyV="TOP" virtual="true">
+    <Shadow><Offset x="1" y="-1"/><Color r="0" g="0" b="0" a="1.0"/></Shadow>
+</FontString>
+
+<!-- 	Use for tooltip left string -->
+<FontString name="Zero2Max_tooltip_left" inherits="GameTooltipText" justifyH="LEFT" justifyV="TOP" virtual="true">
+    <Shadow><Offset x="1" y="-1"/><Color r="0" g="0" b="0" a="1.0"/></Shadow>
+</FontString>
+
+<!-- 	Use for tooltip right string-->
+<FontString name="Zero2Max_tooltip_right" inherits="GameTooltipText" justifyH="RIGHT" justifyV="TOP" virtual="true">
+    <Shadow><Offset x="1" y="-1"/><Color r="0" g="0" b="0" a="1.0"/></Shadow>
+</FontString>
+
+<!-- 	Use for header tooltip and option panel -->
+<FontString name="Zero2Max_header_center" inherits="GameTooltipHeaderText" justifyH="CENTER" justifyV="TOP" virtual="true">
+    <Shadow><Offset x="1" y="-1"/><Color r="0" g="0" b="0" a="1.0"/></Shadow>
+</FontString>
+
+<!-- =========================================================================================== -->
+<!-- =========================================================================================== -->
+<!-- =========================================================================================== -->
+<!-- Board frame -->
+<!-- 	First board -->
+<!-- 		will be cloned to the rest subboards -->
+<Frame name="Zero2Max_Board" parent="UIParent" inherits="BackdropTemplate" frameStrata="LOW" enableMouse="true" resizable="false" movable="false" clampedToScreen="true" hidden="false">
+	<Anchors>
+		<Anchor point="TOPLEFT" relativeTo="WorldFrame" relativePoint="TOPLEFT">
+			<Offset x="50" y="-100" />
+		</Anchor>
+    </Anchors>
+	<Scripts>
+		<OnEvent>
+			Zero2Max.MainFrame:OnEvent();
+		</OnEvent>
+    </Scripts>
+</Frame>
+
+<!-- =========================================================================================== -->
+<!-- =========================================================================================== -->
+<!-- =========================================================================================== -->
+<!-- Tooltips window frame -->
+<!-- 	First tooltips, left top corner one -->
+<!-- 		will be cloned to the rest tooltips windows and tooltips header -->
+<Frame name="Zero2Max_Window" parent="UIParent" inherits="BackdropTemplate" frameStrata="LOW" enableMouse="false" resizable="false" movable="false" clampedToScreen="true" hidden="false">
+	<Anchors>
+		<Anchor point="TOPLEFT" relativeTo="Zero2Max_Board" relativePoint="TOPRIGHT">
+			<Offset x="1" y="0" />
+		</Anchor>
+    </Anchors>
+</Frame>
+
+<!-- =========================================================================================== -->
+<!-- =========================================================================================== -->
+<!-- =========================================================================================== -->
+<!-- Panel frame -->
+<!-- 	First panel -->
+<!-- 		will be cloned to the rest panels -->
+<Frame name="Zero2Max_Panel" parent="UIParent" inherits="BackdropTemplate" frameStrata="LOW" enableMouse="false" resizable="false" movable="false" clampedToScreen="true" hidden="false">
+	<Anchors>
+		<Anchor point="BOTTOMLEFT" relativeTo="Zero2Max_Board" relativePoint="TOPLEFT">
+			<Offset x="1" y="0" />
+		</Anchor>
+    </Anchors>
+</Frame>
+
+<!-- =========================================================================================== -->
+<!-- =========================================================================================== -->
+<!-- =========================================================================================== -->
+<!-- Portrait frame -->
+<!-- 	First portrait -->
+<!-- 		will be cloned to the rest portraits -->
+<Frame name="Zero2Max_Portrait" parent="UIParent" inherits="BackdropTemplate" frameStrata="LOW" enableMouse="false" resizable="false" movable="false" clampedToScreen="true" hidden="false">
+	<Anchors>
+		<Anchor point="TOPLEFT" relativeTo="Zero2Max_Board" relativePoint="BOTTOMLEFT">
+			<Offset x="1" y="0" />
+		</Anchor>
+    </Anchors>
+</Frame>
+
+<!-- =========================================================================================== -->
+<!-- =========================================================================================== -->
+<!-- =========================================================================================== -->
+<!-- Image frame -->
+<!-- 	First image -->
+<!-- 		will be cloned to the rest images -->
+<Frame name="Zero2Max_Image" parent="UIParent" inherits="BackdropTemplate" frameStrata="LOW" enableMouse="false" resizable="false" movable="false" clampedToScreen="true" hidden="false">
+	<Anchors>
+		<Anchor point="TOPLEFT" relativeTo="Zero2Max_Board" relativePoint="TOPRIGHT">
+			<Offset x="1" y="0" />
+		</Anchor>
+    </Anchors>
+</Frame>
+
+</Ui>
