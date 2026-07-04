@@ -2241,7 +2241,7 @@ Zero2Max.MainFrame.WriteMessageAppSet = function(self, range, win1, win2, win3, 
 		tdx = tdx + 1
 		--<<set table header
 		if z[j + offSet] ~= nil then
-			ht[tdx] = z[j + offSet]
+			ht[tdx] = L[z[j + offSet]]
 		else
 			ht[tdx] = "Header"
 		end
@@ -2277,14 +2277,14 @@ Zero2Max.MainFrame.WriteMessageAppSet = function(self, range, win1, win2, win3, 
 		end
 	end
 
-	win1.line.hline:SetText(L[ht[1]])
-	win2.line.hline:SetText(L[ht[2]])
-	win3.line.hline:SetText(L[ht[3]])
-	win4.line.hline:SetText(L[ht[4]])
-	win5.line.hline:SetText(L[ht[5]])
-	win6.line.hline:SetText(L[ht[6]])
-	win7.line.hline:SetText(L[ht[7]])
-	win8.line.hline:SetText(L[ht[8]])
+	win1.line.hline:SetText(ht[1])
+	win2.line.hline:SetText(ht[2])
+	win3.line.hline:SetText(ht[3])
+	win4.line.hline:SetText(ht[4])
+	win5.line.hline:SetText(ht[5])
+	win6.line.hline:SetText(ht[6])
+	win7.line.hline:SetText(ht[7])
+	win8.line.hline:SetText(ht[8])
 	self:AdjWin(win1, mt[1], lt[1], rt[1])
 	self:AdjWin(win2, mt[2], lt[2], rt[2])
 	self:AdjWin(win3, mt[3], lt[3], rt[3])

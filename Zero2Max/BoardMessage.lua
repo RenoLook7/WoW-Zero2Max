@@ -20,7 +20,8 @@ Zero2Max.MainFrame.SetProgress = function(self)
 	if opt[1] then
 	--<<body message
 		-- level
-		temp1 = L["Level"] .. ": "
+		temp1 = L["Level"]
+	--	temp1 = L["Level"] .. ": "
 		temp2 = color .. x.pLevel .. " " .. x.pSpec .. cend
 		mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, false, temp1, temp2)
 		if x.pHSpec ~= "" then 
@@ -30,32 +31,38 @@ Zero2Max.MainFrame.SetProgress = function(self)
 		-- experience
 --		if x.pLevel ~= x.pMaxLevel then
 		if x.pLevel ~= 90 then
-			temp1 = L["XP"] .. ": "
+			temp1 = L["XP"]
+	--		temp1 = L["XP"] .. ": "
 			temp2 = color .. floor((x.pXP/x.pXPMax)*100+0.9) .. "% ( " .. x.pXP - x.pXPMax .. " )" .. cend
 			mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, true, temp1, temp2)
 		end
 		-- item level
-		temp1 = L["Item Level_s"] .. ": "
+		temp1 = L["Item Level_s"]
+	--	temp1 = L["Item Level_s"] .. ": "
 		temp2 = color .. x.pILevelStatus .. cend
 		mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, true, temp1, temp2)
 		-- chromie time
 		if x.pLevel < 70 then
-			temp1 = L["Chromie Time_s"] .. ": "
+			temp1 = L["Chromie Time_s"]
+	--		temp1 = L["Chromie Time_s"] .. ": "
 			temp2 = color .. x.pCTime .. cend
 			mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, true, temp1, temp2)
 		end
 		-- heartstone
-		temp1 = L["Hearthstone"] .. ": "
+		temp1 = L["Hearthstone"]
+	--	temp1 = L["Hearthstone"] .. ": "
 		temp2 = color .. GetBindLocation() .. cend
 		mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, true, temp1, temp2)
 		-- gold
-		temp1 = L["Gold"] .. ": "
+		temp1 = L["Gold"]
+	--	temp1 = L["Gold"] .. ": "
 		temp2 = color .. BreakUpLargeNumbers(x.pMoney / 10000) .. cend
 		mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, true, temp1, temp2)
 		-- quest
 		local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
 --p		local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
-		temp1 = L["Quest"] .. ": "
+		temp1 = L["Quest"]
+	--	temp1 = L["Quest"] .. ": "
 		temp2 = color .. numQuests .. cend
 --p		temp2 = color .. numQuests .. " / " .. maxNumQuestsCanAccept .. cend
 		mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, true, temp1, temp2)
@@ -65,7 +72,8 @@ Zero2Max.MainFrame.SetProgress = function(self)
 		if x.pLevel >= 10 then
 			local hasUnspentPoints, numClassPoints, numSpecPoints = C_ClassTalents.HasUnspentTalentPoints()
 			if hasUnspentPoints ~= nil then
-				temp1 = L["Talent"] .. ": "
+				temp1 = L["Talent"]
+	--			temp1 = L["Talent"] .. ": "
 				local alert = color
 				if numClassPoints > 0 then
 					alert = c.red
@@ -137,7 +145,8 @@ Zero2Max.MainFrame.SetProgress = function(self)
 	rtext = ""
 	if opt[2] then
 		if (x.pPro1 == nil) and  (x.pPro2 == nil) and  (x.pPro3 == nil) and  (x.pPro4 == nil) and  (x.pPro5 == nil) then 
-			temp1 = L["Profession"] .. ": "
+			temp1 = L["Profession"]
+	--		temp1 = L["Profession"] .. ": "
 			temp2 = c.red .. L["Nil"] .. cend
 			mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, false, temp1, temp2)
 		else
@@ -162,11 +171,13 @@ Zero2Max.MainFrame.SetProgress = function(self)
 			end
 			if trackFish == 0 then
 				local sp_name = C_Spell.GetSpellName(43308)
-				mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, true, sp_name .. ": " .. L["Nil"], " ", c.red)
+				mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, true, sp_name, L["Nil"], c.red)
+	--			mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, true, sp_name .. ": " .. L["Nil"], " ", c.red)
 			end
 			if trackLumber == 0 then
 				local sp_name = C_Spell.GetSpellName(1256697)
-				mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, true, sp_name .. ": " .. L["Nil"], " ", c.red)
+				mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, true, sp_name, L["Nil"], c.red)
+	--			mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, true, sp_name .. ": " .. L["Nil"], " ", c.red)
 			end
 		end
 	else
@@ -190,7 +201,8 @@ Zero2Max.MainFrame.SetProgress = function(self)
 --p				covName = covData.name .. " " .. C_CovenantSanctumUI.GetRenownLevel() .. " (" .. C_Garrison.GetNumFollowers(123) .. ")"
 			end
 		end
-		temp1 = L["Covenant"] .. ": "
+		temp1 = L["Covenant"]
+	--	temp1 = L["Covenant"] .. ": "
 		temp2 = color .. covName .. cend
 		mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, false, temp1, temp2)
 	else
@@ -208,17 +220,20 @@ Zero2Max.MainFrame.FormatProf = function(self, mtext, ltext, rtext, tempSkill, d
 	local tempName = defaultName
 	local lnew = ""
 	local rnew = ""
+	local cend = "|r"
 
 	if tempSkill == nil then
 		tempStatus = L["Unlearned"]
-		lnew = defaultName .. ": "
+		lnew = defaultName
+	--	lnew = defaultName .. ": "
 		rnew = c.red .. tempStatus .. cend
 		mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, newLine, lnew, rnew)
 	else
 		if tempSkill[6] ~= nil then
 			tempName = tempSkill[6]
 		end
-		lnew = tempName .. ": "
+		lnew = tempName
+	--	lnew = tempName .. ": "
 		if tempSkill[2] ~= tempSkill[3] then
 			rnew = self.AddL(rnew, false, tempSkill[2], defaultColor)
 		else

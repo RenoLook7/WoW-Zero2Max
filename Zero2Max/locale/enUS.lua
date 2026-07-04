@@ -197,5 +197,5 @@ L["Darkmoon Adventurer's Guide"] = "Darkmoon Adventurer's Guide"
 L["Ultimate Gnomish Army Knife"] = "Ultimate Gnomish Army Knife"
 L["Talisman of True Treasure Tracking"] = "Talisman of True Treasure Tracking"
 --
-L["Header"] = "Header"
+--L["Header"] = "Header"
 --
