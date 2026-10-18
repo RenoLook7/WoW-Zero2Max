@@ -243,7 +243,7 @@ function Zero2Max.Player:SyncData()
 	for k, v in pairs(ic_table) do
 		ic_result[k] = {}
 		for j, u in pairs(v) do
-			ic_result[k][j] = {u, GetItemCount(u,true,nil,true)}
+			ic_result[k][j] = {u, C_Item.GetItemCount(u,true,nil,true)}
 		end
 	end
 	self.pIC = ic_result

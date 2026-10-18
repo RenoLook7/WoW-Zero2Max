@@ -208,7 +208,7 @@ Zero2Max.MainFrame.WriteMessageEq = function(self, window)
 		else
 			local cILvl = C_Item.GetCurrentItemLevel(itemLoc)
 			local iLink = C_Item.GetItemLink(itemLoc)
-			local iName, _, iQual = GetItemInfo(iLink)
+			local iName, _, iQual = C_Item.GetItemInfo(iLink)
 			color = c.itemquality[iQual]
 			mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, notNew, iName, cILvl, color)
 		end
@@ -753,7 +753,7 @@ Zero2Max.MainFrame.WriteMessageProf = function(self, window, prof)
 			else
 				local cILvl = C_Item.GetCurrentItemLevel(itemLoc)
 				local iLink = C_Item.GetItemLink(itemLoc)
-				local iName, _, iQual = GetItemInfo(iLink)
+				local iName, _, iQual = C_Item.GetItemInfo(iLink)
 				color = c.itemquality[iQual]
 				mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, true, iName, cILvl, color)
 			end
@@ -866,6 +866,7 @@ Zero2Max.MainFrame.WriteMessageGroup3 = function(self, window, message)
 	local mtext = ""
 	local ltext = ""
 	local rtext = ""
+	local nl = "\n"
 	local currInfo = {}
 
 	local k = nil
@@ -1057,6 +1058,124 @@ Zero2Max.MainFrame.WriteMessageGroup3 = function(self, window, message)
 			--<<setup header
 			window.line.hline:SetText(L["Dragonflight"])
 			mtext, ltext, rtext = renownCheck(10)
+		end
+	end
+
+
+	if	(message == "repu_9a") or 
+		(message == "repu_9b") or
+		(message == "repu_8") or
+		(message == "repu_7") then
+
+		local function repuCheck(expansion, scope)
+			local mtext  = ""
+			local ltext  = ""
+			local rtext  = ""
+			local notNew = false
+
+			if (scope == 1) or (scope == 3) then 
+				local rList = Zero2Max.EXPANSION_REPUTATION[expansion]
+				for k, v in pairs(rList) do
+					local r1 = C_Reputation.GetFactionDataByID(v)
+					local tm1 = getglobal("FACTION_STANDING_LABEL" .. r1.reaction)
+					if r1.reaction == 8 then
+						mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, notNew, r1.name, tm1, c.springgreen)
+					else
+						local tm2 = "( - " .. r1.nextReactionThreshold - r1.currentStanding .. " ) " .. tm1
+						mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, notNew, r1.name, tm2, c.white)
+					end
+					notNew = true
+				end
+			end
+
+			if (scope == 2) or (scope == 3) then 
+				local fList = Zero2Max.EXPANSION_FRIEND[expansion]
+				for k, v in pairs(fList) do
+					local f1 = C_GossipInfo.GetFriendshipReputationRanks(v)
+					local f2 = C_GossipInfo.GetFriendshipReputation(v)
+					if f1.currentLevel == f1.maxLevel then
+						mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, notNew, f2.name, f2.reaction, c.springgreen)
+					else
+						local tm1 = "( - " .. f2.nextThreshold - f2.standing .. " )"
+						local tm2 = f1.currentLevel .. " / " .. f1.maxLevel
+						local tm3 = tm1 .. " " .. tm2 .. " " .. f2.reaction
+						mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, notNew, f2.name, tm3)
+					end
+					notNew = true
+				end
+			end
+			return mtext, ltext, rtext
+		end
+
+		local function repuCovenant()
+			local mtext  = ""
+			local ltext  = ""
+			local rtext  = ""
+			local notNew = false
+			local covMax = 70
+			local covName = L["Nil"]
+			local covLvl = nil
+			local covData = {}
+			local covActive = C_Covenants.GetActiveCovenantID()
+			if (covActive ~= nil) and (covActive > 0) then
+				covData = C_Covenants.GetCovenantData(covActive)
+				covName = covData.name
+				covLvl  = C_CovenantSanctumUI.GetRenownLevel()
+				if (covLvl < covMax) then
+					mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, notNew, covName, covLvl .. " / " .. covMax)
+				else
+					mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, notNew, covName, covLvl, c.springgreen)
+				end
+			else
+				mtext, ltext, rtext = self.AddLR(mtext, ltext, rtext, notNew, L["Covenant"], covName)
+			end
+			return mtext, ltext, rtext
+		end
+
+		if message == "repu_9a" then
+			--<<setup header
+			window.line.hline:SetText(L["Shadowlands"])
+			mtext, ltext, rtext = repuCovenant()
+			local mtext2 = ""
+			local ltext2 = ""
+			local rtext2 = ""
+			mtext2, ltext2, rtext2 = repuCheck(9, 1)
+			mtext = mtext .. nl .. mtext2
+			ltext = ltext .. nl .. ltext2
+			rtext = rtext .. nl .. rtext2			
+		end
+
+		if message == "repu_9b" then
+			--<<setup header
+			window.line.hline:SetText(L["Shadowlands"])
+			mtext, ltext, rtext = repuCheck(9, 2)
+		end
+
+		if message == "repu_8" then
+			--<<setup header
+			window.line.hline:SetText(L["Battle for Azeroth"])
+			mtext, ltext, rtext = repuCheck(8, 1)
+			local mtext2 = ""
+			local ltext2 = ""
+			local rtext2 = ""
+			if x.pFactI == 1 then
+				mtext2, ltext2, rtext2 = repuCheck(52, 3)
+			else	
+				mtext2, ltext2, rtext2 = repuCheck(51, 3)
+			end
+			mtext = mtext .. nl .. mtext2
+			ltext = ltext .. nl .. ltext2
+			rtext = rtext .. nl .. rtext2
+			mtext2, ltext2, rtext2 = repuCheck(8, 2)
+			mtext = mtext .. nl .. mtext2
+			ltext = ltext .. nl .. ltext2
+			rtext = rtext .. nl .. rtext2
+		end
+
+		if message == "repu_7" then
+			--<<setup header
+			window.line.hline:SetText(L["Legion"])
+			mtext, ltext, rtext = repuCheck(7, 3)
 		end
 	end
 

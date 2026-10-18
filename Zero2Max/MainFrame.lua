@@ -130,9 +130,10 @@ Zero2Max.MainFrame =
 			self.panelA10 = CreateFrame("Frame", nil, self.panelA1, "BackdropTemplate")
 			self:BuildWin(self.panelA10, "brick")
 			self.panelA10:SetPoint("TOPLEFT", self.panelA9, "TOPRIGHT", 1 - gapW, 0)
-			self.panelA10:SetScript("OnEnter", function() self:ShowSomething(self.panelA10, pL[10][1]) end)
-			self.panelA10:SetScript("OnLeave", function() self:HideSomething(self.panelA10, pL[10][1]) end)
-			self.panelA10:SetScript("OnMouseUp", function(_, button) self:ClickBoard(self.panelA10, button) end)
+			self.panelA10:SetScript("OnEnter", function(_, button) self:ClickOption(self.panelA10, "selectpanel", 10) end)
+		--	self.panelA10:SetScript("OnEnter", function() self:ShowSomething(self.panelA10, pL[10][1]) end)
+		--	self.panelA10:SetScript("OnLeave", function() self:HideSomething(self.panelA10, pL[10][1]) end)
+		--	self.panelA10:SetScript("OnMouseUp", function(_, button) self:ClickBoard(self.panelA10, button) end)
 			self:AdjBrick(self.panelA10, lColor .. L[pL[10][2] .. titleS] .. pL[10][3] .. lColorE)
 
 			self.panelA11 = CreateFrame("Frame", nil, self.panelA1, "BackdropTemplate")
@@ -676,7 +677,7 @@ Zero2Max.MainFrame =
 			self:WriteMessageChar(self.windowT, L["Profession Specialization"] .. " 2")
 			self:AdjAllTopDownWin()
 			self:AdjTopWin()
-		elseif mode == "renown" then
+		elseif mode == "renown1" then
 			self:WriteMessageGroup3(self.windowA1, "renown_12")
 			self:WriteMessageGroup3(self.windowA2, "renown_11")
 			self:WriteMessageGroup3(self.windowA3, "renown_10")
@@ -684,6 +685,24 @@ Zero2Max.MainFrame =
 			self:WriteMessageEmpty(self.windowB1, self.windowB2, self.windowB3, self.windowB4)
 			self:WriteMessageEmpty(self.windowC1, self.windowC2, self.windowC3, self.windowC4)
 			self:WriteMessageChar(self.windowT, L["Renown"])
+			self:AdjAllTopDownWin()
+			self:AdjTopWin()
+		elseif mode == "renown2" then
+			self:WriteMessageGroup3(self.windowA1, "repu_9a")
+			self:WriteMessageGroup3(self.windowA2, "repu_9b")
+			self:WriteMessageEmpty(self.windowA3, self.windowA4)
+			self:WriteMessageEmpty(self.windowB1, self.windowB2, self.windowB3, self.windowB4)
+			self:WriteMessageEmpty(self.windowC1, self.windowC2, self.windowC3, self.windowC4)
+			self:WriteMessageChar(self.windowT, L["Reputation"])
+			self:AdjAllTopDownWin()
+			self:AdjTopWin()
+		elseif mode == "renown3" then
+			self:WriteMessageGroup3(self.windowA1, "repu_8")
+			self:WriteMessageGroup3(self.windowA2, "repu_7")
+			self:WriteMessageEmpty(self.windowA3, self.windowA4)
+			self:WriteMessageEmpty(self.windowB1, self.windowB2, self.windowB3, self.windowB4)
+			self:WriteMessageEmpty(self.windowC1, self.windowC2, self.windowC3, self.windowC4)
+			self:WriteMessageChar(self.windowT, L["Reputation"])
 			self:AdjAllTopDownWin()
 			self:AdjTopWin()
 		elseif mode == "gear" then
@@ -875,6 +894,8 @@ Zero2Max.MainFrame =
 			self:AdjWinColor(self.panelA7, 0, 0, 0, 0.02)
 			self.panelA8:SetBackdropBorderColor(0, 0, 0, 0.1)
 			self:AdjWinColor(self.panelA8, 0, 0, 0, 0.02)
+			self.panelA10:SetBackdropBorderColor(0, 0, 0, 0.1)
+			self:AdjWinColor(self.panelA10, 0, 0, 0, 0.02)
 
 			window:SetBackdropBorderColor(0, 1, 1, 1)
 			self:AdjWinColor(window, 0, 0.44, 0.871, 0.2)
@@ -939,6 +960,12 @@ Zero2Max.MainFrame =
 				Zero2Max.panelSelect = "profspec"
 				self.panelB1:Show()								-- -------------------------
 				self.panelB2:Show()								-- -------------------------
+			end
+			if option2 == 10 then
+				Zero2Max.panelSelect = "renown"
+				self.panelB1:Show()								-- -------------------------
+				self.panelB2:Show()								-- -------------------------
+				self.panelB3:Show()								-- -------------------------
 			end
 		end
     end,
