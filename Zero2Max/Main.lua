@@ -26,7 +26,8 @@ Zero2Max.boardOpt = {
 	[2] = true,								-- false = fold; true = unfold for subboard1
 	[3] = true,								-- false = fold; true = unfold for subboard2
 	[4] = true,								-- false = fold; true = unfold for panel list
-	[5] = {true, "All", "Uncollected"}		-- true = show all; false = show uncollected only
+	[5] = {true, "All", "Uncollected"},		-- true = show all; false = show uncollected only
+	[6] = false,							-- false = fold; true = unfold for portrait
 }
 
 Zero2Max.panelList = {
@@ -63,10 +64,31 @@ Zero2Max.colorQuest		= {1, 0.6, 0, 1, 1, 0.4, 0, 0.2}
 Zero2Max.colorFollower	= {0.6, 0.4, 0.8, 1, 0.4, 0.4, 0.6, 0.2}
 Zero2Max.colorProf		= {1, 0, 0, 1, 1, 0.4, 0.4, 0.2}
 
-Zero2Max.portraitSetting2			= nil
-Zero2Max.portraitSetting3			= nil
-Zero2Max.portraitIsRotated			= true
-Zero2Max.portraitRotation			= 0
+--	Zero2Max.portraitSetting2	= nil
+--	Zero2Max.portraitSetting3	= nil
+--	Zero2Max.portraitIsRotated	= true
+--	Zero2Max.portraitRotation	= 1			-- need review
+Zero2Max.portraitFacing     = 1			-- 1 right, 2 front, 3 left
+Zero2Max.portraitMode		= 1			-- 1 helmless, 2 dress, 3 undress
+
+Zero2Max.portraitSetSelect    = 1
+Zero2Max.portraitSetSelectMax = 14
+Zero2Max.portraitSet = {
+	[1]  = {200, 200, 0, 0, 0, 1},
+	[2]  = {200, 200, 0, 0, 0, 1.3},
+	[3]  = {200, 200, 0, 0, 0, 1.5},
+	[4]  = {300, 300, 0, 0, 0, 1},
+	[5]  = {300, 300, 0, 0, 0, 1.3},
+	[6]  = {300, 300, 0, 0, 0, 1.5},
+	[7]  = {200, 300, 0, 0, 0, 1.3},
+	[8]  = {200, 300, 0, 0, 0, 1.7},
+	[9]  = {200, 400, 0, 0, 0.05, 1.7},
+	[10] = {200, 400, 0, 0, 0.1, 1.7},
+	[11] = {400, 200, 0, 0, 0, 1.8},
+	[12] = {400, 100, 0, 0, 0, 2},
+	[13] = {200, 100, 0, 0, 0, 1},
+	[14] = {300, 100, 0, 0, 0, 1.5},
+}
 
 --d	Zero2Max.portraitDebugOrgS 			= 1
 --d	Zero2Max.portraitDebugSelection		= 1		-- 1=s, 2=r, 3=x, 4=y, 5=z
@@ -140,7 +162,7 @@ function Zero2Max:UnregisterEvents()
 	self.frame:UnregisterEvent("BANKFRAME_CLOSED");
 end
 
---- PLAYER_LOGIN callback. Initializes the config, locale and c Objects.
+-- PLAYER_LOGIN callback. Initializes the config, locale and c Objects.
 function Zero2Max:OnPlayerLogin()
     self:RegisterEvents()
     
@@ -174,7 +196,6 @@ end
 function Zero2Max:OnPlayerEnteringWorld()
     Zero2Max.Player:SyncData()
     Zero2Max.MainControl:Update()
-	Zero2Max.MainFrame.windowP:Show()
 end
 
 function Zero2Max:OnTradeSkillShow()

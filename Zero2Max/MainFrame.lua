@@ -13,6 +13,7 @@ Zero2Max.MainFrame =
 		local gapW = Zero2Max.gapWide
 		local gapH = Zero2Max.gapHight
 		local titleS = Zero2Max.titleShort
+		local pSize = Zero2Max.portraitSetSelect
 
         if Zero2Max_Board ~= nil then
 		
@@ -131,9 +132,6 @@ Zero2Max.MainFrame =
 			self:BuildWin(self.panelA10, "brick")
 			self.panelA10:SetPoint("TOPLEFT", self.panelA9, "TOPRIGHT", 1 - gapW, 0)
 			self.panelA10:SetScript("OnEnter", function(_, button) self:ClickOption(self.panelA10, "selectpanel", 10) end)
-		--	self.panelA10:SetScript("OnEnter", function() self:ShowSomething(self.panelA10, pL[10][1]) end)
-		--	self.panelA10:SetScript("OnLeave", function() self:HideSomething(self.panelA10, pL[10][1]) end)
-		--	self.panelA10:SetScript("OnMouseUp", function(_, button) self:ClickBoard(self.panelA10, button) end)
 			self:AdjBrick(self.panelA10, lColor .. L[pL[10][2] .. titleS] .. pL[10][3] .. lColorE)
 
 			self.panelA11 = CreateFrame("Frame", nil, self.panelA1, "BackdropTemplate")
@@ -280,9 +278,10 @@ Zero2Max.MainFrame =
 			-- ============================================================================================== --
 			--<<create portrait
 			self.windowP = Zero2Max_Portrait
---f			self:BuildPor(self.windowP, "face")
---f			self.windowP:SetPoint("TOPLEFT", self.sboard2, "BOTTOMLEFT", 0, -1 + gapH)
---f			self.windowP:SetScript("OnShow", function() self:PortraitOnShow(self.windowP) end)
+			self:BuildPor(self.windowP, "face")
+			self.windowP:SetPoint("TOPLEFT", self.sboard2, "BOTTOMLEFT", 0, -1 + gapH)
+			self.windowP:SetScript("OnShow", function() self:PortraitOnShow(self.windowP) end)
+			self.windowP:SetScript("OnMouseUp", function(_, button) self:PortraitMode(self.windowP, button) end)
 
 --d			self.windowP1 = CreateFrame("Frame", nil, self.windowP, "BackdropTemplate")
 --d			self:BuildPor(self.windowP1, "face")
@@ -297,6 +296,18 @@ Zero2Max.MainFrame =
 --d			self.windowP2:SetWidth(210)
 --d			self.windowP2:SetHeight(50)
 --d			self.windowP2:Show()
+
+			self.portopt = CreateFrame("Frame", nil, self.window, "BackdropTemplate")
+			self:BuildWin(self.portopt, "brick")
+			self.portopt:SetPoint("TOPRIGHT", self.windowP, "TOPLEFT", -1 + gapW, 0)
+			self.portopt:SetScript("OnEnter", function(_, button) self:ClickOption(self.portopt, "portopt", 6) end)
+			self:AdjBrick(self.portopt, lColor .. "+" .. lColorE)
+
+			self.portopt2 = CreateFrame("Frame", nil, self.window, "BackdropTemplate")
+			self:BuildWin(self.portopt2, "brick")
+			self.portopt2:SetPoint("TOPRIGHT", self.portopt, "BOTTOMRIGHT", 0, -1 + gapH)
+			self.portopt2:SetScript("OnMouseUp", function(_, button) self:PortraitChange(self.windowP) end)
+			self:AdjBrick(self.portopt2, lColor .. pSize .. lColorE)
 
 			-- ============================================================================================== --
 			--<<create image
@@ -332,11 +343,14 @@ Zero2Max.MainFrame =
         Zero2Max_Board:Show()
 		Zero2Max_Window:Hide()
 		if Zero2Max.boardOpt[4] then
---f			Zero2Max_Portrait:Hide()
 			Zero2Max_Panel:Show()
 		else
 			Zero2Max_Panel:Hide()
---f			Zero2Max_Portrait:Show()
+		end
+		if Zero2Max.boardOpt[6] then
+			Zero2Max_Portrait:Show()
+		else
+			Zero2Max_Portrait:Hide()
 		end
 		Zero2Max_Image:Hide()
     end,
@@ -354,11 +368,11 @@ Zero2Max.MainFrame =
 		window:SetBackdropBorderColor(1, 0.75, 0, 1)
 		if ((mode == "1") or (mode == "2") or (mode == "3") or (mode == "4") or (mode == "5") or (mode == "6") or (mode == "7")) and (Zero2Max.panelSelect == "image") then
 			Zero2Max_Window:Hide()
---f			Zero2Max_Portrait:Hide()
+			Zero2Max_Portrait:Hide()
 			self:ShowImage(window, mode)
 		else
 			Zero2Max_Image:Hide()
---f			Zero2Max_Portrait:Hide()
+			Zero2Max_Portrait:Hide()
 			self:ShowTooltip(window, mode)
 		end
 	end,
@@ -367,14 +381,18 @@ Zero2Max.MainFrame =
 		window:SetBackdropBorderColor(0, 0, 0, 0.1)
 		if ((mode == "1") or (mode == "2") or (mode == "3") or (mode == "4") or (mode == "5") or (mode == "6") or (mode == "7")) and (Zero2Max.panelSelect == "image") then
 			self:HideImage(window, mode)
---f			if not Zero2Max.pinWindow then
---f				Zero2Max_Portrait:Show()
---f			end
+			if not Zero2Max.pinWindow then
+				if Zero2Max.boardOpt[6] then
+					Zero2Max_Portrait:Show()
+				end
+			end
 		else
 			self:HideTooltip(window, mode)
---f			if not Zero2Max.pinWindow then
---f				Zero2Max_Portrait:Show()
---f			end
+			if not Zero2Max.pinWindow then
+				if Zero2Max.boardOpt[6] then
+					Zero2Max_Portrait:Show()
+				end
+			end
 		end
 	end,
 
@@ -854,14 +872,10 @@ Zero2Max.MainFrame =
 				Zero2Max.boardOpt[option2] = false
 				self:AdjBrick(window, lColor .. ">" .. lColorE)
 				Zero2Max_Panel:Hide()
---f				Zero2Max_Portrait:Show()
-				self.windowP:Show()
 			else
 				Zero2Max.boardOpt[option2] = true
 				self:AdjBrick(window, lColor .. "<" .. lColorE)
 				Zero2Max_Panel:Show()
---f				Zero2Max_Portrait:Hide()
-				self.windowP:Hide()
 			end
 		end
 
@@ -873,6 +887,19 @@ Zero2Max.MainFrame =
 			else
 				Zero2Max.boardOpt[option2][1] = true
 				self:AdjBrick(window, lColor .. L[Zero2Max.boardOpt[option2][2] .. titleS] .. lColorE)
+			end
+		end
+
+		-- for portrait show/hide
+		if option1 == "portopt" then
+			if Zero2Max.boardOpt[option2] then
+				Zero2Max.boardOpt[option2] = false
+				self:AdjBrick(window, lColor .. "+" .. lColorE)
+				Zero2Max_Portrait:Hide()
+			else
+				Zero2Max.boardOpt[option2] = true
+				self:AdjBrick(window, lColor .. "-" .. lColorE)
+				Zero2Max_Portrait:Show()
 			end
 		end
 
@@ -980,13 +1007,13 @@ Zero2Max.MainFrame =
 			Zero2Max_Panel:SetScale(Zero2Max.panelScale)
 			if Zero2Max.boardOpt[4] then 
 				Zero2Max_Panel:Show()
---f				Zero2Max_Portrait:Hide()
 			else
 				Zero2Max_Panel:Hide()
---f				Zero2Max_Portrait:Show()
---f				if Zero2Max.MainFrame.windowP ~= nil then
---f					Zero2Max.MainFrame.windowP.picture:Show()
---f				end
+			end
+			if Zero2Max.boardOpt[6] then
+				Zero2Max_Portrait:Show()
+			else
+				Zero2Max_Portrait:Hide()
 			end
 			Zero2Max_Image:Hide()
         else
@@ -997,7 +1024,7 @@ Zero2Max.MainFrame =
 			Zero2Max_Image:Hide()
         end
     end,
-    
+
     -- Called each time an event is fired.
     OnEvent = function(self)
         return true
